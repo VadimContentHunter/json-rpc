@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace vadimcontenthunter\JsonRpc;
@@ -10,4 +9,8 @@ namespace vadimcontenthunter\JsonRpc;
  */
 class Test
 {
+    public function __construct()
+    {
+        print("init test class");
+    }
 }
