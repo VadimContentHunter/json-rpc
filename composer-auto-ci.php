@@ -6,7 +6,7 @@ $output = null;
 $retval = null;
 exec('composer run-script auto-ci', $output, $retval);
 if ($retval < 0) {
-    print($output);
+    print(implode("\n", $output));
     exit(1);
 }
 
