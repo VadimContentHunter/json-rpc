@@ -1,0 +1,47 @@
+{
+    "name": "vadimcontenthunter/json-rpc",
+    "description": "JSON-RPC implementation",
+    "type": "library",
+    "license": "GPL-3.0-only",
+    "autoload": {
+        "psr-4": {
+            "vadimcontenthunter\\JsonRpc\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "vadimcontenthunter\\JsonRpc\\tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vadim",
+            "email": "project.k.vadim@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "psr/log": "^3.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.7",
+        "phpunit/phpunit": "^10.1",
+        "phpstan/phpstan": "^1.10"
+    },
+    "scripts": {
+        "phpcs": [
+            "./vendor/bin/phpcs"
+        ],
+        "phpunit_tests_all":[
+            "./vendor/bin/phpunit"
+        ],
+        "phpstan": [
+            "./vendor/bin/phpstan analyse"
+        ],
+        "auto-ci": [
+            "@phpcs",
+            "@phpunit_tests_all",
+            "@phpstan"
+        ]
+    }
+}
