@@ -2,16 +2,12 @@
 
 declare(strict_types=1);
 
-namespace vadimcontenthunter\JsonRpc;
+namespace vadimcontenthunter\JsonRpc\exceptions;
 
 /**
  * @author    Vadim Volkovskyi <project.k.vadim@gmail.com>
  * @copyright (c) Vadim Volkovskyi 2022
  */
-class Test
+class JsonRpcException extends \Exception
 {
-    public function __construct()
-    {
-        print("init test class");
-    }
 }
