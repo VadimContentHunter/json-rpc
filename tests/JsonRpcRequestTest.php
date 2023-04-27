@@ -15,7 +15,7 @@ use vadimcontenthunter\JsonRpc\tests\fakes\JsonRpcRequestFake;
  */
 class JsonRpcRequestTest extends TestCase
 {
-    public function test__construct()
+    public function test_construct()
     {
         $request = new JsonRpcRequestFake('testMethod', ['param1' => 'value1', 'param2' => 'value2'], 12345);
 
@@ -24,7 +24,7 @@ class JsonRpcRequestTest extends TestCase
         $this->assertEquals(12345, $request->fakeGetId());
     }
 
-    public function test__serialize()
+    public function test_serialize()
     {
         $request = new JsonRpcRequestFake('testMethod', ['param1' => 'value1', 'param2' => 'value2'], 12345);
 
@@ -36,7 +36,17 @@ class JsonRpcRequestTest extends TestCase
         ], $request->__serialize());
     }
 
-    public function test__unserialize_array()
+    public function test_serialize_withoutParamsAndId()
+    {
+        $request = new JsonRpcRequestFake('testMethod');
+
+        $this->assertEquals([
+            "jsonrpc" => "2.0",
+            "method" => "testMethod",
+        ], $request->__serialize());
+    }
+
+    public function test_unserialize_array()
     {
         $data = [
             'method' => 'testMethod',
@@ -58,7 +68,7 @@ class JsonRpcRequestTest extends TestCase
         $this->assertEquals(12345, $request->fakeGetId());
     }
 
-    public function test__unserialize_string()
+    public function test_unserialize_string()
     {
         $data = '{"method":"testMethod","params":{"param1":"value1","param2":"value2"},"id":12345}';
 
@@ -73,8 +83,20 @@ class JsonRpcRequestTest extends TestCase
         $this->assertEquals(12345, $request->fakeGetId());
     }
 
+    public function test_unserialize_withoutParamsAndId()
+    {
+        $data = '{"method":"testMethod"}';
+
+        $request = new JsonRpcRequestFake('emptyMethod');
+        $request->__unserialize($data);
+
+        $this->assertEquals('testMethod', $request->fakeGetMethod());
+        $this->assertEquals([], $request->fakeGetParams());
+        $this->assertEquals(null, $request->fakeGetId());
+    }
+
     #[DataProvider('incorrectData')]
-    public function test__unserialize_incorrectData($data)
+    public function test_unserialize_incorrectData($data)
     {
         $this->expectException(JsonRpcException::class);
 
@@ -94,7 +116,7 @@ class JsonRpcRequestTest extends TestCase
         ];
     }
 
-    public function testJsonSerialize()
+    public function test_JsonSerialize()
     {
         $request = new JsonRpcRequestFake('testMethod', ['param1' => 'value1', 'param2' => 'value2'], 12345);
 
@@ -104,5 +126,31 @@ class JsonRpcRequestTest extends TestCase
             "params" => ['param1' => 'value1', 'param2' => 'value2'],
             "id" => 12345,
         ], $request->jsonSerialize());
+    }
+
+    public function test_JsonSerialize_withoutParamsAndId()
+    {
+        $request = new JsonRpcRequestFake('testMethod');
+
+        $this->assertEquals([
+            "jsonrpc" => "2.0",
+            "method" => "testMethod",
+        ], $request->jsonSerialize());
+    }
+
+    public function test_JsonRpcRequest_on_json_encode()
+    {
+        $expected = '{"jsonrpc":"2.0","method":"testMethod","params":{"param1":"value1","param2":"value2"},"id":12345}';
+        $request = new JsonRpcRequestFake('testMethod', ['param1' => 'value1', 'param2' => 'value2'], 12345);
+
+        $this->assertEquals($expected, json_encode($request));
+    }
+
+    public function test_JsonRpcRequest_on_json_encode_withoutParamsAndId()
+    {
+        $expected = '{"jsonrpc":"2.0","method":"testMethod"}';
+        $request = new JsonRpcRequestFake('testMethod');
+
+        $this->assertEquals($expected, json_encode($request));
     }
 }

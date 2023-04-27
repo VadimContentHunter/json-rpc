@@ -26,12 +26,20 @@ class JsonRpcRequest implements \JsonSerializable
 
     public function __serialize(): array
     {
-        return [
+        $result = [
             "jsonrpc" => $this->version,
             "method" => $this->method,
-            "params" => $this->params,
-            "id" => $this->id,
         ];
+
+        if (count($this->params) !== 0) {
+            $result += ["params" => $this->params];
+        }
+
+        if ($this->id !== null) {
+            $result += ["id" => $this->id];
+        }
+
+        return $result;
     }
 
     public function __unserialize(mixed $data): void
