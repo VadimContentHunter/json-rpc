@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace vadimcontenthunter\JsonRpc;
 
+use vadimcontenthunter\JsonRpc\interfaces\IJsonRpcRequest;
 use vadimcontenthunter\JsonRpc\exceptions\JsonRpcException;
 
 /**
  * @author    Vadim Volkovskyi <project.k.vadim@gmail.com>
  * @copyright (c) Vadim Volkovskyi 2022
  */
-class JsonRpcRequest implements \JsonSerializable
+class JsonRpcRequest implements \JsonSerializable, IJsonRpcRequest
 {
     protected string $version = '2.0';
 
@@ -24,6 +25,9 @@ class JsonRpcRequest implements \JsonSerializable
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __serialize(): array
     {
         $result = [
@@ -45,7 +49,7 @@ class JsonRpcRequest implements \JsonSerializable
     public function __unserialize(mixed $data): void
     {
         if (is_array($data)) {
-            $this->method = $data['method'] ?? throw new JsonRpcException("Error, failed to parse json line.");
+            $this->method = $data['method'] ?? throw new JsonRpcException("Error, incorrect data.");
             $this->params = $data['params'] ?? [];
             $this->id = $data['id'] ?? null;
         } elseif (is_string($data)) {
@@ -67,5 +71,10 @@ class JsonRpcRequest implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return $this->__serialize();
+    }
+
+    public function getJsonRequest(): string
+    {
+        return json_encode($this);
     }
 }
