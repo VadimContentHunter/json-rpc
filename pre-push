@@ -1,3 +1,9 @@
 #!/bin/sh
 
-php composer-auto-ci.php
+res=$(php composer-auto-ci.php)
+
+if [ "$res" = 0 ]; then
+    exit 0
+else
+    exit 1
+fi
