@@ -77,4 +77,14 @@ class JsonRpcRequest implements \JsonSerializable, IJsonRpcRequest
     {
         return json_encode($this);
     }
+
+    public function composeArray(): array
+    {
+        return [
+            'version' => $this->version,
+            'method' => $this->method,
+            'params' => $this->params,
+            'id' => $this->id
+        ];
+    }
 }

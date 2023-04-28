@@ -18,4 +18,6 @@ interface IJsonRpcRequest
     public function __unserialize(mixed $data): void;
 
     public function getJsonRequest(): string;
+
+    public function composeArray(): array;
 }

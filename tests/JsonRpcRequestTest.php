@@ -153,4 +153,21 @@ class JsonRpcRequestTest extends TestCase
 
         $this->assertEquals($expected, json_encode($request));
     }
+
+    /**
+     * Проверяет метод composeArray класса JsonRpcError. Он убеждается в том, что метод возвращает
+     * ожидаемый набор данных в формате JSON-RPC.
+     */
+    public function testRpcErrorComposeArray()
+    {
+        $request = new JsonRpcRequestFake('testMethod', ['param1' => 'value1', 'param2' => 'value2'], 12345);
+        $expectedResult = [
+            "version" => "2.0",
+            "method" => "testMethod",
+            "params" => ['param1' => 'value1', 'param2' => 'value2'],
+            "id" => 12345,
+        ];
+
+        $this->assertSame($expectedResult, $request->composeArray());
+    }
 }

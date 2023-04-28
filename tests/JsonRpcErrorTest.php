@@ -84,4 +84,31 @@ final class JsonRpcErrorTest extends TestCase
         $error->__unserialize($errorData);
         $this->assertEquals(null, $error->getData());
     }
+
+    /**
+     * Проверяет метод composeArray класса JsonRpcError. Он убеждается в том, что метод возвращает
+     * ожидаемый набор данных об ошибке в формате JSON-RPC.
+     */
+    public function testRpcErrorComposeArray()
+    {
+        $error = new JsonRpcError(100, "Test error message", ["key" => "value"]);
+        $expectedResult = [
+            "code" => 100,
+            "message" => "Test error message",
+            "data" => ["key" => "value"]
+        ];
+
+        $this->assertSame($expectedResult, $error->composeArray());
+    }
+
+    /**
+     * Проверяет корректность возвращаемого методом getJsonRequest JSON-RPC-запроса
+     */
+    public function testRpcErrorGetJsonRequest()
+    {
+        $error = new JsonRpcError(100, "Test error message", ["key" => "value"]);
+        $expectedResult = '{"code":100,"message":"Test error message","data":{"key":"value"}}';
+
+        $this->assertSame($expectedResult, $error->getJsonRequest());
+    }
 }
