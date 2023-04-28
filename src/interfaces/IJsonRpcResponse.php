@@ -18,4 +18,10 @@ interface IJsonRpcResponse
     public function __unserialize(mixed $data): void;
 
     public function getJsonRequest(): string;
+
+    public function composeArray(): array;
+
+    public static function createFromArray(array $data): JsonRpcResponse;
+
+    public static function createFromJson(string $json): JsonRpcResponse;
 }
