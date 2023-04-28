@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace vadimcontenthunter\JsonRpc;
 
+use vadimcontenthunter\JsonRpc\interfaces\IJsonRpcError;
 use vadimcontenthunter\JsonRpc\exceptions\JsonRpcException;
 
 /**
  * @author    Vadim Volkovskyi <project.k.vadim@gmail.com>
  * @copyright (c) Vadim Volkovskyi 2022
  */
-class JsonRpcError
+class JsonRpcError implements \JsonSerializable, IJsonRpcError
 {
     public function __construct(
         protected int $code,
@@ -74,5 +75,19 @@ class JsonRpcError
     public function getData(): ?array
     {
         return $this->data;
+    }
+
+    public function getJsonRequest(): string
+    {
+        return json_encode($this);
+    }
+
+    public function composeArray(): array
+    {
+        return [
+            'code' => $this->code,
+            'message' => $this->message,
+            'data' => $this->data
+        ];
     }
 }

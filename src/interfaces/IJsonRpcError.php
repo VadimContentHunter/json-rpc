@@ -22,4 +22,8 @@ interface IJsonRpcError
     public function getMessage(): string;
 
     public function getData(): ?array;
+
+    public function getJsonRequest(): string;
+
+    public function composeArray(): array;
 }
