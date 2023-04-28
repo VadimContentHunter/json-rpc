@@ -106,4 +106,11 @@ class JsonRpcResponseTest extends TestCase
         $this->expectException(JsonRpcException::class);
         JsonRpcResponse::createFromJson('{"jsonrpc":"2.0", "id": 1 "result":"test_result"}');
     }
+
+    public function testGetJsonRequest(): void
+    {
+        $response_json = '{"jsonrpc":"2.0","id":1,"result":"test_result"}';
+        $response = JsonRpcResponse::createFromJson($response_json);
+        $this->assertEquals($response_json, $response->getJsonRequest());
+    }
 }
