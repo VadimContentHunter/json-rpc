@@ -31,8 +31,6 @@ class JsonRpcError implements \JsonSerializable, IJsonRpcError
             $result += ["data" => $this->data];
         }
 
-        // test
-
         return $result;
     }
 
