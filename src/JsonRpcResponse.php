@@ -78,9 +78,9 @@ class JsonRpcResponse implements \JsonSerializable, IJsonRpcResponse
             throw new JsonRpcException("Error, The Result field should be null when returning an error.");
         }
 
-        $this->result = $data['method'] ?? null;
-        $this->id = $data['params'] ?? null;
-        $this->error = $data['id'] ?? null;
+        $this->result = $data['result'] ?? null;
+        $this->id = $data['id'] ?? null;
+        $this->error = $data['error'] ?? null;
     }
 
     public function jsonSerialize(): array
@@ -123,7 +123,7 @@ class JsonRpcResponse implements \JsonSerializable, IJsonRpcResponse
         ];
     }
 
-    public static function createFromArray(array $data): JsonRpcResponse
+    public static function createFromArray(array $data): IJsonRpcResponse
     {
         $result = isset($data['result']) ? $data['result'] : null;
         $id = isset($data['id']) ? $data['id'] : null;
@@ -135,9 +135,14 @@ class JsonRpcResponse implements \JsonSerializable, IJsonRpcResponse
         return new self($result, $id, $error);
     }
 
-    public static function createFromJson(string $json): JsonRpcResponse
+    public static function createFromJson(string $json): IJsonRpcResponse
     {
         $data = json_decode($json, true);
+        if ($data === false) {
+            throw new JsonRpcException("Error, failed to parse json line.");
+        } elseif ($data === null) {
+            throw new JsonRpcException("Error, json cannot be converted or the encoded data contains more nested levels than the specified nesting limit.");
+        }
         return self::createFromArray($data);
     }
 }

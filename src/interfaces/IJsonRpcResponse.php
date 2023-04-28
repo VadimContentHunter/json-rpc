@@ -21,7 +21,7 @@ interface IJsonRpcResponse
 
     public function composeArray(): array;
 
-    public static function createFromArray(array $data): JsonRpcResponse;
+    public static function createFromArray(array $data): IJsonRpcResponse;
 
-    public static function createFromJson(string $json): JsonRpcResponse;
+    public static function createFromJson(string $json): IJsonRpcResponse;
 }
