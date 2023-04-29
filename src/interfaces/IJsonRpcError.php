@@ -18,4 +18,18 @@ interface IJsonRpcError
      * @return array<string, mixed>|null
      */
     public function getData(): ?array;
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function __serialize(): array;
+
+    public function __unserialize(mixed $data): void;
+
+    public function getJsonRequest(): string;
+
+    /**
+     * @return array<string,mixed>
+     */
+    public function composeArray(): array;
 }
