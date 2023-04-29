@@ -2,8 +2,7 @@
 
 php composer-auto-ci.php
 status=$?
-if [ $status -eq 0 ]; then
-    exit 0
-else
+echo "cmd pre-push status: $status"
+if [ $status -ne 0 ]; then
     exit 1
 fi
