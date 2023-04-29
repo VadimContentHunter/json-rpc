@@ -10,13 +10,6 @@ namespace vadimcontenthunter\JsonRpc\interfaces;
  */
 interface IJsonRpcError
 {
-    /**
-     * @return array<string, mixed>
-     */
-    public function __serialize(): array;
-
-    public function __unserialize(mixed $data): void;
-
     public function getCode(): int;
 
     public function getMessage(): string;
@@ -25,11 +18,4 @@ interface IJsonRpcError
      * @return array<string, mixed>|null
      */
     public function getData(): ?array;
-
-    public function getJsonRequest(): string;
-
-    /**
-     * @return array<string,mixed>
-     */
-    public function composeArray(): array;
 }

@@ -11,23 +11,9 @@ namespace vadimcontenthunter\JsonRpc\interfaces;
 interface IJsonRpcRequest
 {
     /**
-     * @return array<string, mixed>
-     */
-    public function __serialize(): array;
-
-    public function __unserialize(mixed $data): void;
-
-    public function getJsonRequest(): string;
-
-    /**
-     * @return array<string,mixed>
-     */
-    public function composeArray(): array;
-
-    /**
      * @param array<string,mixed> $data
      */
-    public static function createFromArray(array $data): IJsonRpcRequest;
+    public static function createFromArray(array $data): IJsonRpcSend;
 
-    public static function createFromJson(string $json): IJsonRpcRequest;
+    public static function createFromJson(string $json): IJsonRpcSend;
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace vadimcontenthunter\JsonRpc;
 
+use vadimcontenthunter\JsonRpc\interfaces\IJsonRpcBase;
 use vadimcontenthunter\JsonRpc\interfaces\IJsonRpcError;
 use vadimcontenthunter\JsonRpc\exceptions\JsonRpcException;
 
@@ -11,7 +12,7 @@ use vadimcontenthunter\JsonRpc\exceptions\JsonRpcException;
  * @author    Vadim Volkovskyi <project.k.vadim@gmail.com>
  * @copyright (c) Vadim Volkovskyi 2022
  */
-class JsonRpcError implements \JsonSerializable, IJsonRpcError
+class JsonRpcError implements \JsonSerializable, IJsonRpcError, IJsonRpcBase
 {
     public function __construct(
         protected int $code,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace vadimcontenthunter\JsonRpc;
 
+use vadimcontenthunter\JsonRpc\interfaces\IJsonRpcBase;
 use vadimcontenthunter\JsonRpc\exceptions\JsonRpcException;
 use vadimcontenthunter\JsonRpc\interfaces\IJsonRpcResponse;
 
@@ -11,7 +12,7 @@ use vadimcontenthunter\JsonRpc\interfaces\IJsonRpcResponse;
  * @author    Vadim Volkovskyi <project.k.vadim@gmail.com>
  * @copyright (c) Vadim Volkovskyi 2022
  */
-class JsonRpcResponse implements \JsonSerializable, IJsonRpcResponse
+class JsonRpcResponse implements \JsonSerializable, IJsonRpcResponse, IJsonRpcBase
 {
     protected string $version = '2.0';
 
