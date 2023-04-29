@@ -125,8 +125,8 @@ class JsonRpcResponse implements \JsonSerializable, IJsonRpcResponse
 
     public static function createFromArray(array $data): IJsonRpcResponse
     {
-        $result = isset($data['result']) ? $data['result'] : null;
-        $id = isset($data['id']) ? $data['id'] : null;
+        $result = $data['result'] ?? null;
+        $id = $data['id'] ?? null;
         $error = null;
         if ($data['error'] instanceof JsonRpcError) {
             $error = $data['error'];

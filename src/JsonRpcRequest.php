@@ -87,4 +87,24 @@ class JsonRpcRequest implements \JsonSerializable, IJsonRpcRequest
             'id' => $this->id
         ];
     }
+
+    public static function createFromArray(array $data): JsonRpcRequest
+    {
+        $method = $data['method'] ?? throw new JsonRpcException("Error, incorrect data.");
+        $params = $data['params'] ?? [];
+        $id = $data['id'] ?? null;
+
+        return new self($method, $params, $id);
+    }
+
+    public static function createFromJson(string $json): JsonRpcRequest
+    {
+        $data = json_decode($json, true);
+        if ($data === false) {
+            throw new JsonRpcException("Error, failed to parse json line.");
+        } elseif ($data === null) {
+            throw new JsonRpcException("Error, json cannot be converted or the encoded data contains more nested levels than the specified nesting limit.");
+        }
+        return self::createFromArray($data);
+    }
 }

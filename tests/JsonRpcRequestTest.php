@@ -170,4 +170,11 @@ class JsonRpcRequestTest extends TestCase
 
         $this->assertSame($expectedResult, $request->composeArray());
     }
+
+    public function testGetJsonRequest(): void
+    {
+        $response_json = '{"jsonrpc":"2.0","method":"subtract","params":[42,23],"id":1}';
+        $response = JsonRpcRequestFake::createFromJson($response_json);
+        $this->assertEquals($response_json, $response->getJsonRequest());
+    }
 }
