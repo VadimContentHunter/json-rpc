@@ -1,8 +1,8 @@
 #!/bin/sh
 
-res=$(php composer-auto-ci.php)
-
-if [ "$res" = 0 ]; then
+php composer-auto-ci.php
+status=$?
+if [ $status -eq 0 ]; then
     exit 0
 else
     exit 1
