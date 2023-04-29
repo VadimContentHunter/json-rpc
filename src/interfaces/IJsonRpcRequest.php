@@ -13,7 +13,7 @@ interface IJsonRpcRequest
     /**
      * @param array<string,mixed> $data
      */
-    public static function createFromArray(array $data): IJsonRpcSend;
+    public static function createFromArray(array $data): IJsonRpcRequest;
 
-    public static function createFromJson(string $json): IJsonRpcSend;
+    public static function createFromJson(string $json): IJsonRpcRequest;
 }
