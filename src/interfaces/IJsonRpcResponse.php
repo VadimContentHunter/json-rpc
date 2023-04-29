@@ -8,7 +8,7 @@ namespace vadimcontenthunter\JsonRpc\interfaces;
  * @author    Vadim Volkovskyi <project.k.vadim@gmail.com>
  * @copyright (c) Vadim Volkovskyi 2022
  */
-interface IJsonRpcResponse
+interface IJsonRpcResponse extends IJsonRpcBase
 {
     /**
      * @param array<string,mixed> $data
