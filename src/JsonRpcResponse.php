@@ -33,6 +33,9 @@ class JsonRpcResponse implements \JsonSerializable, IJsonRpcResponse
         }
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function __serialize(): array
     {
         $result = [
@@ -83,36 +86,43 @@ class JsonRpcResponse implements \JsonSerializable, IJsonRpcResponse
         $this->error = $data['error'] ?? null;
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function jsonSerialize(): array
     {
         return $this->__serialize();
     }
 
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    public function getResult()
+    public function getResult(): mixed
     {
         return $this->result;
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getError()
+    public function getError(): ?JsonRpcError
     {
         return $this->error;
     }
 
     public function getJsonRequest(): string
     {
-        return json_encode($this);
+        $json = json_encode($this);
+        return is_string($json) ? $json : throw new JsonRpcException("Error, Incorrect json.");
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function composeArray(): array
     {
         return [
@@ -123,6 +133,9 @@ class JsonRpcResponse implements \JsonSerializable, IJsonRpcResponse
         ];
     }
 
+    /**
+     * @param array<string,mixed> $data
+     */
     public static function createFromArray(array $data): IJsonRpcResponse
     {
         $result = $data['result'] ?? null;

@@ -68,6 +68,9 @@ class JsonRpcRequest implements \JsonSerializable, IJsonRpcRequest
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return $this->__serialize();
@@ -75,9 +78,13 @@ class JsonRpcRequest implements \JsonSerializable, IJsonRpcRequest
 
     public function getJsonRequest(): string
     {
-        return json_encode($this);
+        $json = json_encode($this);
+        return is_string($json) ? $json : throw new JsonRpcException("Error, Incorrect json.");
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function composeArray(): array
     {
         return [
@@ -88,6 +95,9 @@ class JsonRpcRequest implements \JsonSerializable, IJsonRpcRequest
         ];
     }
 
+    /**
+     * @param array<string,mixed> $data
+     */
     public static function createFromArray(array $data): JsonRpcRequest
     {
         $method = $data['method'] ?? throw new JsonRpcException("Error, incorrect data.");

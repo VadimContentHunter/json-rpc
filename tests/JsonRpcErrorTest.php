@@ -89,7 +89,7 @@ final class JsonRpcErrorTest extends TestCase
      * Проверяет метод composeArray класса JsonRpcError. Он убеждается в том, что метод возвращает
      * ожидаемый набор данных об ошибке в формате JSON-RPC.
      */
-    public function testRpcErrorComposeArray()
+    public function testRpcErrorComposeArray(): void
     {
         $error = new JsonRpcError(100, "Test error message", ["key" => "value"]);
         $expectedResult = [
@@ -104,7 +104,7 @@ final class JsonRpcErrorTest extends TestCase
     /**
      * Проверяет корректность возвращаемого методом getJsonRequest JSON-RPC-запроса
      */
-    public function testRpcErrorGetJsonRequest()
+    public function testRpcErrorGetJsonRequest(): void
     {
         $error = new JsonRpcError(100, "Test error message", ["key" => "value"]);
         $expectedResult = '{"code":100,"message":"Test error message","data":{"key":"value"}}';

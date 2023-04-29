@@ -16,6 +16,9 @@ class JsonRpcError implements \JsonSerializable, IJsonRpcError
     public function __construct(
         protected int $code,
         protected string $message,
+        /**
+         * @var mixed[]
+         */
         protected ?array $data = null,
     ) {
     }
@@ -48,8 +51,8 @@ class JsonRpcError implements \JsonSerializable, IJsonRpcError
         } else {
             throw new JsonRpcException("Error, incorrect data.");
         }
-        if ($data['data'] && !is_array($data['data'])) {
-            throw new JsonRpcException("Error, field 'Data', not an array.");
+        if (!is_array($data['data']) && $data['data'] !== null) {
+            throw new JsonRpcException("Error, field 'Data', not an array or not null.");
         }
 
         $this->code = $data['code'] ?? throw new JsonRpcException("Error, no field 'code'.");
@@ -57,6 +60,9 @@ class JsonRpcError implements \JsonSerializable, IJsonRpcError
         $this->data = $data['data'] ?? null;
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function jsonSerialize(): array
     {
         return $this->__serialize();
@@ -72,6 +78,9 @@ class JsonRpcError implements \JsonSerializable, IJsonRpcError
         return $this->message;
     }
 
+    /**
+     * @return array<string,mixed>|null
+     */
     public function getData(): ?array
     {
         return $this->data;
@@ -79,9 +88,13 @@ class JsonRpcError implements \JsonSerializable, IJsonRpcError
 
     public function getJsonRequest(): string
     {
-        return json_encode($this);
+        $json = json_encode($this);
+        return is_string($json) ? $json : throw new JsonRpcException("Error, Incorrect json.");
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function composeArray(): array
     {
         return [

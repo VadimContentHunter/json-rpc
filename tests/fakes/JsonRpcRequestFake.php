@@ -19,6 +19,9 @@ class JsonRpcRequestFake extends JsonRpcRequest
         return $this->method;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function fakeGetParams(): array
     {
         return $this->params;

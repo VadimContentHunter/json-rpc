@@ -19,8 +19,14 @@ interface IJsonRpcResponse
 
     public function getJsonRequest(): string;
 
+    /**
+     * @return array<string,mixed>
+     */
     public function composeArray(): array;
 
+    /**
+     * @param array<string,mixed> $data
+     */
     public static function createFromArray(array $data): IJsonRpcResponse;
 
     public static function createFromJson(string $json): IJsonRpcResponse;
