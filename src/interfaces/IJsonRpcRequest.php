@@ -18,4 +18,15 @@ interface IJsonRpcRequest extends IJsonRpcBase
     public static function createFromArray(array $data): IJsonRpcRequest;
 
     public static function createFromJson(string $json): IJsonRpcRequest;
+
+    public function getVersion(): string;
+
+    public function getMethod(): string;
+
+    /**
+     * @return mixed[]
+     */
+    public function getParams(): array;
+
+    public function getId(): ?int;
 }

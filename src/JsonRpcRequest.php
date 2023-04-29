@@ -95,6 +95,29 @@ class JsonRpcRequest implements \JsonSerializable, IJsonRpcRequest
         ];
     }
 
+    public function getVersion(): string
+    {
+        return $this->version;
+    }
+
+    public function getMethod(): string
+    {
+        return $this->method;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParams(): array
+    {
+        return $this->params;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     /**
      * @param array<string,mixed> $data
      */
