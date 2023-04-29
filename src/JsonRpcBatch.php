@@ -31,7 +31,7 @@ class JsonRpcBatch implements IJsonRpcBatch
         foreach ($this->jsonRpsItems as $key => $item) {
             $json .= $item->getJsonRequest() . ',';
         }
-        $json .= strlen($json) > 1 ? substr($json, 0, -1) : '';
+        $json = strlen($json) > 1 ? substr($json, 0, -1) : '';
         $json .= ']';
 
         return $json;
