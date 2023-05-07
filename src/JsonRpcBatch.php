@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace vadimcontenthunter\JsonRpc;
 
+use vadimcontenthunter\JsonRpc\JsonRpcRequest;
 use vadimcontenthunter\JsonRpc\interfaces\IJsonRpcBase;
 use vadimcontenthunter\JsonRpc\interfaces\IJsonRpcBatch;
 use vadimcontenthunter\JsonRpc\exceptions\JsonRpcException;
@@ -25,7 +26,7 @@ class JsonRpcBatch implements IJsonRpcBatch
         return $this;
     }
 
-    public function getJsonRequest(): string
+    public function getJson(): string
     {
         $json = '[';
         foreach ($this->jsonRpsItems as $key => $item) {
@@ -35,5 +36,29 @@ class JsonRpcBatch implements IJsonRpcBatch
         $json .= ']';
 
         return $json;
+    }
+
+    /**
+     * @return IJsonRpcBase[]
+     */
+    public function getBatch(): array
+    {
+        return $this->jsonRpsItems;
+    }
+
+    public function createBatchRequestFromJson(string $json): IJsonRpcBatch
+    {
+        if (preg_match('~^\[(?<body>{.+[},])*]$~u', $json, $matches)) {
+            $items_json = preg_split("~}\s*,\s*{~u", $matches['body']);
+            foreach ($items_json as $item) {
+                $item = str_contains($item[0], '{') ? $item : '{' . $item;
+                $item = str_contains($item[-1], '}') ? $item : $item . '}';
+                $this->jsonRpsItems[] = JsonRpcRequest::createFromJson($item);
+            }
+        } else {
+            throw new JsonRpcException("Error, incorrect data.");
+        }
+
+        return $this;
     }
 }

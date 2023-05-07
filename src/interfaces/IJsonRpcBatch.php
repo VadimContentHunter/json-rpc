@@ -12,5 +12,12 @@ interface IJsonRpcBatch
 {
     public function addItem(IJsonRpcBase $item): IJsonRpcBatch;
 
-    public function getJsonRequest(): string;
+    public function getJson(): string;
+
+    /**
+     * @return IJsonRpcBase[]
+     */
+    public function getBatch(): array;
+
+    public function createBatchRequestFromJson(string $json): IJsonRpcBatch;
 }
