@@ -80,4 +80,16 @@ class JsonRpcBatchTest extends TestCase
         $result = $batch->createBatchRequestFromJson($json)->getBatch();
         $this->assertEquals($expected, $result);
     }
+
+    public function testCreateBatchRequestFromOneRequest(): void
+    {
+        $expected = [
+            new JsonRpcRequest('testMethod', ['param1' => 'value1', 'param2' => 'value2'], 1),
+        ];
+
+        $json = '{"jsonrpc":"2.0","method":"testMethod","params":{"param1":"value1","param2":"value2"},"id":1}';
+        $batch = new JsonRpcBatch();
+        $result = $batch->createBatchRequestFromJson($json)->getBatch();
+        $this->assertEquals($expected, $result);
+    }
 }

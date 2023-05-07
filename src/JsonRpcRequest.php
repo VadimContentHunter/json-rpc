@@ -130,6 +130,9 @@ class JsonRpcRequest implements \JsonSerializable, IJsonRpcRequest
         return new self($method, $params, $id);
     }
 
+    /**
+     * @throws JsonRpcException
+     */
     public static function createFromJson(string $json): JsonRpcRequest
     {
         $data = json_decode($json, true);

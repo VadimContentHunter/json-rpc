@@ -56,7 +56,13 @@ class JsonRpcBatch implements IJsonRpcBatch
                 $this->jsonRpsItems[] = JsonRpcRequest::createFromJson($item);
             }
         } else {
-            throw new JsonRpcException("Error, incorrect data.");
+            try {
+                $this->jsonRpsItems[] = JsonRpcRequest::createFromJson($json);
+            } catch (JsonRpcException $jre) {
+                throw $jre;
+            } catch (\Exception $e) {
+                throw new JsonRpcException("Error, incorrect json for batch.");
+            }
         }
 
         return $this;
