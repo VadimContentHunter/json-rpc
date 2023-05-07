@@ -49,7 +49,7 @@ class JsonRpcBatch implements IJsonRpcBatch
     public function createBatchRequestFromJson(string $json): IJsonRpcBatch
     {
         if (preg_match('~^\[(?<body>{.+[},])*]$~u', $json, $matches)) {
-            $items_json = preg_split("~}\s*,\s*{~u", $matches['body']);
+            $items_json = preg_split("~}\s*,\s*{~u", $matches['body']) ?: throw new JsonRpcException("Error, incorrect json for batch.");
             foreach ($items_json as $item) {
                 $item = str_contains($item[0], '{') ? $item : '{' . $item;
                 $item = str_contains($item[-1], '}') ? $item : $item . '}';
@@ -58,10 +58,12 @@ class JsonRpcBatch implements IJsonRpcBatch
         } else {
             try {
                 $this->jsonRpsItems[] = JsonRpcRequest::createFromJson($json);
-            } catch (JsonRpcException $jre) {
-                throw $jre;
-            } catch (\Exception $e) {
-                throw new JsonRpcException("Error, incorrect json for batch.");
+            } catch (\Exception $jre) {
+                if ($jre instanceof JsonRpcException) {
+                    throw $jre;
+                } else {
+                    throw new JsonRpcException("Error, incorrect json for batch.");
+                }
             }
         }
 
