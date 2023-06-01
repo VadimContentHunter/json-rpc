@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace vadimcontenthunter\JsonRpc\interfaces;
 
-use vadimcontenthunter\JsonRpc\JsonRpcError;
+use vadimcontenthunter\JsonRpc\interfaces\IJsonRpcError;
 
 /**
  * @author    Vadim Volkovskyi <project.k.vadim@gmail.com>
@@ -25,5 +25,5 @@ interface IJsonRpcResponse extends IJsonRpcBase
 
     public function getId(): ?int;
 
-    public function getError(): ?JsonRpcError;
+    public function getError(): ?IJsonRpcError;
 }

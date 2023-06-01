@@ -110,7 +110,7 @@ class JsonRpcResponse implements \JsonSerializable, IJsonRpcResponse
         return $this->id;
     }
 
-    public function getError(): ?JsonRpcError
+    public function getError(): ?IJsonRpcError
     {
         return $this->error;
     }
