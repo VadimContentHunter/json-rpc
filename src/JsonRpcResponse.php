@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace vadimcontenthunter\JsonRpc;
 
+use vadimcontenthunter\JsonRpc\interfaces\IJsonRpcError;
 use vadimcontenthunter\JsonRpc\exceptions\JsonRpcException;
 use vadimcontenthunter\JsonRpc\interfaces\IJsonRpcResponse;
 
@@ -18,7 +19,7 @@ class JsonRpcResponse implements \JsonSerializable, IJsonRpcResponse
     public function __construct(
         protected mixed $result = null,
         protected ?int $id = null,
-        protected ?JsonRpcError $error = null,
+        protected ?IJsonRpcError $error = null,
     ) {
         if ($result === null && $id === null && $error === null) {
             throw new JsonRpcException("Error, incorrect answer, an error should be indicated.");
